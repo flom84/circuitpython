@@ -55,7 +55,8 @@ ifeq ($(INTERNAL_FLASH_FILESYSTEM),1)
 CIRCUITPY_ONEWIREIO ?= 0
 endif
 
-MICROPY_PY_ASYNC_AWAIT = 0
+# enable asyncio for boards with samd21 (e.g neokey trinkey  + qtpy m0)
+# MICROPY_PY_ASYNC_AWAIT = 0
 
 # We don't have room for the fonts for terminalio for ja and ko
 # so turn off terminalio, and if it's off and displayio is on,
