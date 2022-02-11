@@ -283,3 +283,12 @@
 [submodule "frozen/Adafruit_CircuitPython_FakeRequests"]
 	path = frozen/Adafruit_CircuitPython_FakeRequests
 	url = https://github.com/adafruit/Adafruit_CircuitPython_FakeRequests.git
+[submodule "frozen/Adafruit_CircuitPython_ht16k33"]
+	path = frozen/Adafruit_CircuitPython_ht16k33
+	url = https://github.com/adafruit/Adafruit_CircuitPython_ht16k33
+[submodule "frozen/Adafruit_CircuitPython_asyncio"]
+	path = frozen/Adafruit_CircuitPython_asyncio
+	url = https://github.com/adafruit/Adafruit_CircuitPython_asyncio.git
+[submodule "frozen/Adafruit_CircuitPython_Ticks"]
+	path = frozen/Adafruit_CircuitPython_Ticks
+	url = https://github.com/adafruit/Adafruit_CircuitPython_Ticks.git
