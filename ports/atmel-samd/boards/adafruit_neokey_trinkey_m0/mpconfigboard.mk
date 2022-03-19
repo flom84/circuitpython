@@ -17,9 +17,26 @@ CIRCUITPY_PULSEIO = 0
 CIRCUITPY_PWMIO = 0
 CIRCUITPY_ROTARYIO = 0
 CIRCUITPY_RTC = 0
+CIRCUITPY_USB_MIDI = 0
+CIRCUITPY_DISPLAYIO = 0
+CIRCUITPY_RAINBOWIO = 0
+CIRCUITPY_NVM = 0
+CIRCUITPY_RANDOM = 0
+CIRCUITPY_TOUCHIO = 0
+CIRCUITPY_MATH = 0
 
 CIRCUITPY_PIXELBUF = 1
+
+# add select and traceback for asyncio
+MICROPY_PY_ASYNC_AWAIT = 1
+MICROPY_PY_UASYNCIO = 1
+MICROPY_PY_USELECT = 1
+MICROPY_PY_USELECT_SELECT = 1
+CIRCUITPY_TRACEBACK = 1
+
 
 # Include these Python libraries in firmware.
 FROZEN_MPY_DIRS += $(TOP)/frozen/Adafruit_CircuitPython_NeoPixel
 FROZEN_MPY_DIRS += $(TOP)/frozen/Adafruit_CircuitPython_HID
+FROZEN_MPY_DIRS += $(TOP)/frozen/Adafruit_CircuitPython_asyncio
+FROZEN_MPY_DIRS += $(TOP)/frozen/Adafruit_CircuitPython_Ticks
