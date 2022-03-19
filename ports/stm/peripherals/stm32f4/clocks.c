@@ -44,11 +44,14 @@
 #ifdef STM32F407xx
 #include "stm32f4/stm32f407xx/clocks.h"
 #endif
+#ifdef STM32F446xx
+#include "stm32f4/stm32f446xx/clocks.h"
+#endif
 
 void stm32_peripherals_clocks_init(void) {
-    RCC_ClkInitTypeDef RCC_ClkInitStruct;
-    RCC_OscInitTypeDef RCC_OscInitStruct;
-    RCC_PeriphCLKInitTypeDef PeriphClkInitStruct;
+    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+    RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
 
     // Set voltage scaling in accordance with system clock speed
     __HAL_RCC_PWR_CLK_ENABLE();
@@ -66,7 +69,7 @@ void stm32_peripherals_clocks_init(void) {
     RCC_OscInitStruct.HSEState = BOARD_HSE_SOURCE;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-    RCC_OscInitStruct.PLL.PLLM = HSE_VALUE / 1000000;
+    RCC_OscInitStruct.PLL.PLLM = CPY_CLK_PLLM;
     RCC_OscInitStruct.PLL.PLLN = CPY_CLK_PLLN;
     RCC_OscInitStruct.PLL.PLLP = CPY_CLK_PLLP;
     RCC_OscInitStruct.PLL.PLLQ = CPY_CLK_PLLQ;
