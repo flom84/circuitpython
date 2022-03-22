@@ -1,5 +1,5 @@
 /*
-    GNU linker script for STM32F411 without nvm and an external flash chip.
+    GNU linker script for STM32F446 without nvm and an external flash chip.
     No space is reserved for a filesystem.
 */
 
