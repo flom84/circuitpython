@@ -39,8 +39,14 @@
 // #define LSE_VALUE  ((uint32_t)32000U)
 #define BOARD_HAS_LOW_SPEED_CRYSTAL (0)
 
-#define DEBUG_UART_TX (&pin_PC10)
-#define DEBUG_UART_RX (&pin_PC11)
+// USART3 + USB FTDI
+// #define DEBUG_UART_TX (&pin_PC10)
+// #define DEBUG_UART_RX (&pin_PC11)
+
+// USART2 + ST link
+#define DEBUG_UART_TX (&pin_PA02)
+#define DEBUG_UART_RX (&pin_PA03)
+
 // Status LEDs
 #define MICROPY_HW_LED_STATUS (&pin_PA05)
 
