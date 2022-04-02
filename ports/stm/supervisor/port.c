@@ -117,7 +117,8 @@ __attribute__((used, naked)) void Reset_Handler(void) {
 
     // Copy all of the itcm code to run from ITCM. Do this while the MPU is disabled because we write
     // protect it.
-    for (uint32_t i = 0; i < ((size_t)&_ld_itcm_size) / 4; i++) {
+    for (uint32_t i = 0; i < ((size_t)&_ld_itcm_size) / 4; i++)
+    {
         (&_ld_itcm_destination)[i] = (&_ld_itcm_flash_copy)[i];
     }
 
@@ -145,22 +146,26 @@ __attribute__((used, naked)) void Reset_Handler(void) {
     ARM_MPU_Enable(MPU_CTRL_PRIVDEFENA_Msk);
 
     // Copy all of the data to run from DTCM.
-    for (uint32_t i = 0; i < ((size_t)&_ld_dtcm_data_size) / 4; i++) {
+    for (uint32_t i = 0; i < ((size_t)&_ld_dtcm_data_size) / 4; i++)
+    {
         (&_ld_dtcm_data_destination)[i] = (&_ld_dtcm_data_flash_copy)[i];
     }
 
     // Clear DTCM bss.
-    for (uint32_t i = 0; i < ((size_t)&_ld_dtcm_bss_size) / 4; i++) {
+    for (uint32_t i = 0; i < ((size_t)&_ld_dtcm_bss_size) / 4; i++)
+    {
         (&_ld_dtcm_bss_start)[i] = 0;
     }
 
     // Copy all of the data to run from D1 RAM.
-    for (uint32_t i = 0; i < ((size_t)&_ld_d1_ram_data_size) / 4; i++) {
+    for (uint32_t i = 0; i < ((size_t)&_ld_d1_ram_data_size) / 4; i++)
+    {
         (&_ld_d1_ram_data_destination)[i] = (&_ld_d1_ram_data_flash_copy)[i];
     }
 
     // Clear D1 RAM bss.
-    for (uint32_t i = 0; i < ((size_t)&_ld_d1_ram_bss_size) / 4; i++) {
+    for (uint32_t i = 0; i < ((size_t)&_ld_d1_ram_bss_size) / 4; i++)
+    {
         (&_ld_d1_ram_bss_start)[i] = 0;
     }
 
@@ -275,6 +280,25 @@ void reset_cpu(void) {
     NVIC_SystemReset();
 }
 
+// Activate the bootloader without BOOT *pins.
+void activate_bootloader(void) {
+    HAL_RCC_DeInit();
+    HAL_DeInit();
+
+    #if defined(STM32F4)
+    __set_MSP(*((uint32_t *)0x1FF00000));
+    ((void (*)(void)) * ((uint32_t *)0x1FF00004))();
+    #elif (STM32F7)
+    __HAL_REMAPMEMORY_SYSTEMFLASH();
+    __set_MSP(*((uint32_t *)0x00000000));
+    ((void (*)(void)) * ((uint32_t *)0x00000004))();
+    #endif
+
+    while (true) {
+        asm ("nop;");
+    }
+};
+
 extern uint32_t _ld_heap_start, _ld_heap_end, _ld_stack_top, _ld_stack_bottom;
 
 uint32_t *port_heap_get_bottom(void) {
@@ -376,7 +400,6 @@ void port_idle_until_interrupt(void) {
 // Required by __libc_init_array in startup code if we are compiling using
 // -nostdlib/-nostartfiles.
 void _init(void) {
-
 }
 
 #if CIRCUITPY_ALARM
