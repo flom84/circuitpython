@@ -29,6 +29,7 @@
 #include "supervisor/background_callback.h"
 #include "supervisor/board.h"
 #include "supervisor/port.h"
+#include "supervisor/filesystem.h"
 #include "shared/timeutils/timeutils.h"
 
 #include "common-hal/microcontroller/Pin.h"
@@ -273,15 +274,9 @@ void reset_port(void) {
 }
 
 void reset_to_bootloader(void) {
-    NVIC_SystemReset();
-}
 
-void reset_cpu(void) {
-    NVIC_SystemReset();
-}
+    filesystem_flush();
 
-// Activate the bootloader without BOOT *pins.
-void activate_bootloader(void) {
     HAL_RCC_DeInit();
     HAL_DeInit();
 
@@ -297,7 +292,11 @@ void activate_bootloader(void) {
     while (true) {
         asm ("nop;");
     }
-};
+}
+
+void reset_cpu(void) {
+    NVIC_SystemReset();
+}
 
 extern uint32_t _ld_heap_start, _ld_heap_end, _ld_stack_top, _ld_stack_bottom;
 
