@@ -283,10 +283,12 @@ void reset_to_bootloader(void) {
     #if defined(STM32F4)
     __set_MSP(*((uint32_t *)0x1FF00000));
     ((void (*)(void)) * ((uint32_t *)0x1FF00004))();
-    #elif (STM32F7)
+    #elif defined(STM32F7)
     __HAL_REMAPMEMORY_SYSTEMFLASH();
     __set_MSP(*((uint32_t *)0x00000000));
     ((void (*)(void)) * ((uint32_t *)0x00000004))();
+    #else
+    NVIC_SystemReset();
     #endif
 
     while (true) {
