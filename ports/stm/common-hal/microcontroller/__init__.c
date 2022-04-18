@@ -72,20 +72,25 @@ void common_hal_mcu_enable_interrupts(void) {
     __DMB();
     __enable_irq();
 }
+static bool next_reset_to_bootloader = false;
 
 void common_hal_mcu_on_next_reset(mcu_runmode_t runmode) {
     if (runmode == RUNMODE_SAFE_MODE) {
         safe_mode_on_next_reset(PROGRAMMATIC_SAFE_MODE);
     }
     if (runmode == RUNMODE_BOOTLOADER) {
-        filesystem_flush();
-        reset_to_bootloader();
+        next_reset_to_bootloader = true;
     }
 }
 
 void common_hal_mcu_reset(void) {
     filesystem_flush(); // TODO: implement as part of flash improvements
-    NVIC_SystemReset();
+
+    if (next_reset_to_bootloader) {
+        reset_to_bootloader();
+    } else {
+        NVIC_SystemReset();
+    }
 }
 
 // The singleton microcontroller.Processor object, bound to microcontroller.cpu
