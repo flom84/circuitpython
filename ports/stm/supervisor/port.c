@@ -29,7 +29,6 @@
 #include "supervisor/background_callback.h"
 #include "supervisor/board.h"
 #include "supervisor/port.h"
-#include "supervisor/filesystem.h"
 #include "shared/timeutils/timeutils.h"
 
 #include "common-hal/microcontroller/Pin.h"
@@ -274,8 +273,6 @@ void reset_port(void) {
 }
 
 void reset_to_bootloader(void) {
-
-    filesystem_flush();
 
     HAL_RCC_DeInit();
     HAL_DeInit();
