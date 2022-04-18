@@ -278,8 +278,8 @@ void reset_to_bootloader(void) {
     HAL_DeInit();
 
     #if defined(STM32F4)
-    __set_MSP(*((uint32_t *)0x1FF00000));
-    ((void (*)(void)) * ((uint32_t *)0x1FF00004))();
+    __set_MSP(*((uint32_t *)0x1FFF0000));
+    ((void (*)(void)) * ((uint32_t *)0x1FFF0004))();
     #elif defined(STM32F7)
     __HAL_REMAPMEMORY_SYSTEMFLASH();
     __set_MSP(*((uint32_t *)0x00000000));
